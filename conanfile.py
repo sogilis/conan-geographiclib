@@ -34,6 +34,7 @@ class GeographicLibConan(ConanFile):
 
     def package(self):
         self.copy(pattern="*.hpp", dst="include", src="distrib/include")
+        self.copy(pattern="*/Config.h", dst="include", src="build/include")
         self.copy(pattern="*.so", dst="lib", src="build/src", keep_path=False)
         self.copy(pattern="*.a", dst="lib", src="build/src", keep_path=False)
 
