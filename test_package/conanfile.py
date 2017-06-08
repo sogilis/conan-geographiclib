@@ -7,7 +7,7 @@ username = os.getenv("CONAN_USERNAME", "riebl")
 
 class GeographicLibTestConan(ConanFile):
     settings = "os", "compiler", "build_type", "arch"
-    requires = "GeographicLib/1.46@%s/%s" % (username, channel)
+    requires = "GeographicLib/1.48@%s/%s" % (username, channel)
     generators = "cmake"
 
     def build(self):

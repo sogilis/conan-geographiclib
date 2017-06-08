@@ -7,7 +7,7 @@ import shutil
 
 class GeographicLibConan(ConanFile):
     name = "GeographicLib"
-    version = "1.46"
+    version = "1.48"
     description = """
         GeographicLib is a small set of C++ classes for performing conversions
         between geographic, UTM, UPS, MGRS, geocentric, and local cartesian coordinates,
