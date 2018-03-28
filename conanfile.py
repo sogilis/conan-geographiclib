@@ -32,7 +32,7 @@ class GeographicLibConan(ConanFile):
         options = []
         options.append('-DGEOGRAPHICLIB_LIB_TYPE=%s' % self.lib_type())
         options.append('-DGEOGRAPHICLIB_PRECISION=%s' % self.options.precision)
-        cmake = CMake(self.settings)
+        cmake = CMake(self)
         files.mkdir('build')
         self.run('cd build && cmake %s %s ../distrib' % (' '.join(options), cmake.command_line))
         self.run('cmake --build build %s' % cmake.build_config)
