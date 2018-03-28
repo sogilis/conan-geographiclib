@@ -17,7 +17,7 @@ class GeographicLibConan(ConanFile):
     settings = "os", "compiler", "build_type", "arch"
     license = "MIT"
     options = {"static": [True, False], "shared": [True, False], "precision": [1, 2, 3, 4, 5]}
-    default_options = "static=False", "shared=True", "precision=2"
+    default_options = "static=True", "shared=False", "precision=2"
 
     def source(self):
         distrib_url = 'https://sourceforge.net/projects/geographiclib/files/distrib/'
@@ -42,6 +42,44 @@ class GeographicLibConan(ConanFile):
         self.copy(pattern="*/Config.h", dst="include", src="build/include")
         self.copy(pattern="*.so", dst="lib", src="build/src", keep_path=False)
         self.copy(pattern="*.a", dst="lib", src="build/src", keep_path=False)
+
+        build_dir = "build/src"
+
+        if self.settings.os == "Windows":
+            if self.options.shared:
+                self.copy(pattern="*.dll", dst="bin", src=build_dir, keep_path=False)
+                # build_dir = os.path.join(self.ZIP_FOLDER_NAME, "_build/lib")
+                self.copy(pattern="*zlibd.lib", dst="lib", src=build_dir, keep_path=False)
+                self.copy(pattern="*zlib.lib", dst="lib", src=build_dir, keep_path=False)
+                self.copy(pattern="*zlib.dll.a", dst="lib", src=build_dir, keep_path=False)
+            else:
+                # build_dir = os.path.join(self.ZIP_FOLDER_NAME, "_build/lib")
+                if self.settings.os == "Windows":
+                    # MinGW
+                    self.copy(pattern="libzlibstaticd.a", dst="lib", src=build_dir, keep_path=False)
+                    self.copy(pattern="libzlibstatic.a", dst="lib", src=build_dir, keep_path=False)
+                    # Visual Studio
+                    self.copy(pattern="zlibstaticd.lib", dst="lib", src=build_dir, keep_path=False)
+                    self.copy(pattern="zlibstatic.lib", dst="lib", src=build_dir, keep_path=False)
+
+                lib_path = os.path.join(self.package_folder, "lib")
+                suffix = "d" if self.settings.build_type == "Debug" else ""
+                if self.settings.compiler == "Visual Studio":
+                    current_lib = os.path.join(lib_path, "zlibstatic%s.lib" % suffix)
+                    os.rename(current_lib, os.path.join(lib_path, "zlib%s.lib" % suffix))
+                elif self.settings.compiler == "gcc":
+                    current_lib = os.path.join(lib_path, "libzlibstatic.a")
+                    os.rename(current_lib, os.path.join(lib_path, "libzlib.a"))
+        else:
+            if self.options.shared:
+                if self.settings.os == "Macos":
+                    self.copy(pattern="*.dylib", dst="lib", src=build_dir, keep_path=False)
+                else:
+                    self.copy(pattern="*.so*", dst="lib", src=build_dir, keep_path=False)
+            else:
+                self.copy(pattern="*.a", dst="lib", src=build_dir, keep_path=False)
+
+
 
     def package_info(self):
         self.cpp_info.libs = ["Geographic"]
