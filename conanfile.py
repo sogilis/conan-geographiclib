@@ -7,13 +7,13 @@ import shutil
 
 class GeographicLibConan(ConanFile):
     name = "GeographicLib"
-    version = "1.48"
+    version = "1.49"
     description = """
         GeographicLib is a small set of C++ classes for performing conversions
         between geographic, UTM, UPS, MGRS, geocentric, and local cartesian coordinates,
         for gravity (e.g., EGM2008), geoid height and geomagnetic field (e.g., WMM2015)
         calculations, and for solving geodesic problems."""
-    url = "https://github.com/riebl/conan-geographiclib"
+    url = "https://github.com/sogilis/conan-geographiclib"
     settings = "os", "compiler", "build_type", "arch"
     license = "MIT"
     options = {"static": [True, False], "shared": [True, False], "precision": [1, 2, 3, 4, 5]}
