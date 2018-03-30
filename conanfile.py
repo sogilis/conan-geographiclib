@@ -49,27 +49,27 @@ class GeographicLibConan(ConanFile):
             if self.options.shared:
                 self.copy(pattern="*.dll", dst="bin", src=build_dir, keep_path=False)
                 # build_dir = os.path.join(self.ZIP_FOLDER_NAME, "_build/lib")
-                self.copy(pattern="*zlibd.lib", dst="lib", src=build_dir, keep_path=False)
-                self.copy(pattern="*zlib.lib", dst="lib", src=build_dir, keep_path=False)
-                self.copy(pattern="*zlib.dll.a", dst="lib", src=build_dir, keep_path=False)
+                self.copy(pattern="*GeographicLibd.lib", dst="lib", src=build_dir, keep_path=False)
+                self.copy(pattern="*GeographicLib.lib", dst="lib", src=build_dir, keep_path=False)
+                self.copy(pattern="*GeographicLib.dll.a", dst="lib", src=build_dir, keep_path=False)
             else:
                 # build_dir = os.path.join(self.ZIP_FOLDER_NAME, "_build/lib")
                 if self.settings.os == "Windows":
                     # MinGW
-                    self.copy(pattern="libzlibstaticd.a", dst="lib", src=build_dir, keep_path=False)
-                    self.copy(pattern="libzlibstatic.a", dst="lib", src=build_dir, keep_path=False)
+                    self.copy(pattern="libGeographicLibstaticd.a", dst="lib", src=build_dir, keep_path=False)
+                    self.copy(pattern="libGeographicLibstatic.a", dst="lib", src=build_dir, keep_path=False)
                     # Visual Studio
-                    self.copy(pattern="zlibstaticd.lib", dst="lib", src=build_dir, keep_path=False)
-                    self.copy(pattern="zlibstatic.lib", dst="lib", src=build_dir, keep_path=False)
+                    self.copy(pattern="GeographicLibstaticd.lib", dst="lib", src=build_dir, keep_path=False)
+                    self.copy(pattern="GeographicLibstatic.lib", dst="lib", src=build_dir, keep_path=False)
 
                 lib_path = os.path.join(self.package_folder, "lib")
                 suffix = "d" if self.settings.build_type == "Debug" else ""
                 if self.settings.compiler == "Visual Studio":
-                    current_lib = os.path.join(lib_path, "zlibstatic%s.lib" % suffix)
-                    os.rename(current_lib, os.path.join(lib_path, "zlib%s.lib" % suffix))
+                    current_lib = os.path.join(lib_path, "GeographicLibstatic%s.lib" % suffix)
+                    os.rename(current_lib, os.path.join(lib_path, "GeographicLib%s.lib" % suffix))
                 elif self.settings.compiler == "gcc":
-                    current_lib = os.path.join(lib_path, "libzlibstatic.a")
-                    os.rename(current_lib, os.path.join(lib_path, "libzlib.a"))
+                    current_lib = os.path.join(lib_path, "libGeographicLibstatic.a")
+                    os.rename(current_lib, os.path.join(lib_path, "libGeographicLib.a"))
         else:
             if self.options.shared:
                 if self.settings.os == "Macos":
