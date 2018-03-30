@@ -1,0 +1,20 @@
+[env]
+# Where is our C compiler
+CC=/usr/sbin/x86_64-w64-mingw32-gcc
+
+# Where is our CPP compiler
+CXX=/usr/sbin/x86_64-w64-mingw32-g++
+
+[settings]
+# We are building in Linux
+os_build=Linux
+arch_build=x86_64
+
+# We are cross building to Windows
+os=Windows
+arch=x86_64
+compiler=gcc
+# Adjust to the gcc version of your MinGW package
+compiler.version=7.3
+compiler.libcxx=libstdc++11
+build_type=Release
